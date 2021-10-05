@@ -6,7 +6,7 @@ public class Main {
 		List<Activity> activities = new ActivityReader().read();
 		
 		for (int i = 0; i < activities.size(); i++) {
-			
+			//processamento
 		}
 	}
 
