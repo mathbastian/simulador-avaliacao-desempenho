@@ -9,8 +9,6 @@ public class ActivityQueue {
 	private int simulationTime = 0;
 	
 	public void process() {
-
-		printQueueStatus();
 		
 		if (currentActivity == null && activityQueue.size() != 0) {
 			currentActivity = activityQueue.poll();
@@ -19,6 +17,8 @@ public class ActivityQueue {
 		else if(currentActivity != null){
 			consumeActivityTime();
 		}
+
+		printQueueStatus();
 	}
 	
 	public boolean hasEndedProcessing() {

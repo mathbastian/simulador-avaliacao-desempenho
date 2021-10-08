@@ -24,7 +24,7 @@ public class Activity {
 	
 	@Override
 	public String toString() {
-		return this.id + " ";
+		return String.valueOf(this.id);
 	}
 		
 }
