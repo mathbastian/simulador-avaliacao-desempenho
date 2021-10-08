@@ -25,6 +25,11 @@ public class Main {
 			
 			queue.process();
 		}
+		
+		//process the remaining activities in the queue
+		while(queue.process() == false) {
+			//let it process
+		}
 	}
 
 }
