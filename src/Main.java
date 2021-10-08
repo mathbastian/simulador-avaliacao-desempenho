@@ -27,8 +27,8 @@ public class Main {
 		}
 		
 		//process the remaining activities in the queue
-		while(queue.process() == false) {
-			//let it process
+		while(queue.hasEndedProcessing() == false) {
+			queue.process();
 		}
 	}
 
