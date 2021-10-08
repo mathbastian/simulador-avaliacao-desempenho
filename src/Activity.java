@@ -24,7 +24,7 @@ public class Activity {
 	
 	@Override
 	public String toString() {
-		return "Atividade " + this.id + ": chegada aos " + arrivalTime + " e tempo de serviço de " + timeItTakes;
+		return this.id + " ";
 	}
 		
 }

@@ -2,11 +2,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.nio.file.FileSystems;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class ActivityReader {
-	public List<Activity> read(){
-		List<Activity> activities = new ArrayList<Activity>();
+	public Queue<Activity> read(){
+		Queue<Activity> activities = new LinkedList<Activity>();
 		
 		try {
 			try (BufferedReader bufferedReader = 
