@@ -1,5 +1,10 @@
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
+
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 public class ActivityQueue {
 
@@ -7,20 +12,28 @@ public class ActivityQueue {
 	private Activity currentActivity;
 	private int timeProcessed = 0;
 	private int simulationTime = 0;
-	
-	public void process() {
+
+	public ActivityQueue() {
+		activityQueue = new LinkedList<>();
+	}
+
+	public void process(BufferedWriter writer) {
 		
-		if (currentActivity == null && activityQueue.size() != 0) {
+		if (isNull(currentActivity) && activityQueue.size() != 0) {
 			currentActivity = activityQueue.poll();
 			consumeActivityTime();
 		}
-		else if(currentActivity != null){
+		else if(nonNull(currentActivity)){
 			consumeActivityTime();
 		}
 
-		printQueueStatus();
+		printQueueStatus(writer);
 	}
-	
+
+	public int getSimulationTime() {
+		return simulationTime;
+	}
+
 	public boolean hasEndedProcessing() {
 		if ( activityQueue.isEmpty() && currentActivity == null )
 			return true;
@@ -38,29 +51,30 @@ public class ActivityQueue {
 		}
 	}
 	
-	private void printQueueStatus() {
-		simulationTime++;
-		
-		System.out.println("******************************************");
-		
-		if(currentActivity != null) 
-			System.out.println("Status do Servidor: OCUPADO -> " + currentActivity.getId());
-		else
-			System.out.println("Status do Servidor: LIVRE");
-		
-		if(activityQueue.size() == 0)
-			System.out.println("FILA: VAZIA");
-		else
-			System.out.println("FILA: " + activityQueue.toString());
-		
-		System.out.println("Tempo de SimulaÁ„o: " + simulationTime);
+	private void printQueueStatus(BufferedWriter writer) {
+		StringBuilder result = new StringBuilder()
+				.append("******************************************")
+				.append("\n")
+				.append("Status do Servidor: ")
+				.append(nonNull(currentActivity)
+						?"OCUPADO ->" + currentActivity.getId()
+						: "LIVRE")
+				.append("\n")
+				.append("FILA: ")
+				.append(activityQueue.size() == 0 ? "VAZIA" : activityQueue)
+				.append("\n")
+				.append("Tempo de Simula√ß√£o: " + simulationTime++);
+
+		try {
+			writer.write(result.toString());
+			writer.newLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
-	
+
 	public void add(Activity activity) {
 		activityQueue.add(activity);
 	}
-	
-	public ActivityQueue() {
-		activityQueue = new LinkedList<Activity>();
-	}
+
 }
