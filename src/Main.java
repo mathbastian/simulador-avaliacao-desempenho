@@ -16,15 +16,9 @@ public class Main {
 		ActivityQueue queue = new ActivityQueue();
 		createResultFile();
 
-		boolean thereAreActivitiesToCome = true;
 		int time = 0;
 
-		while (thereAreActivitiesToCome) {
-			
-			if (activities.size() <= 0) {
-				thereAreActivitiesToCome = false;
-				continue;
-			}
+		while (activities.size() > 0) {
 			
 			if ( activities.peek().getArrivalTime() == time ) {
 				queue.add(activities.poll());
