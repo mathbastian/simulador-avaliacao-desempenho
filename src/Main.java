@@ -3,8 +3,6 @@ import java.util.Queue;
 
 public class Main {
 
-	public static BufferedWriter writer;
-
 	private static int simulationTime = 0;
 	private static int activitiesSize = 0;
 	private static int totalWaitingTime = 0;
@@ -14,7 +12,7 @@ public class Main {
 		activitiesSize = activities.size();
 
 		ActivityQueue queue = new ActivityQueue();
-		createResultFile();
+		BufferedWriter executionLog = createFile("executionLog.txt");
 
 		int time = 0;
 
@@ -28,46 +26,54 @@ public class Main {
 				time++;
 			}
 			
-			queue.process(writer);
+			queue.process(executionLog);
 		}
 
 		//process the remaining activities in the queue
 		while(queue.hasEndedProcessing() == false) {
-			queue.process(writer);
+			queue.process(executionLog);
 			simulationTime = queue.getSimulationTime();
 		}
 		totalWaitingTime = queue.getTotalWaitingTime();
 
 		try {
-			writer.close();
+			executionLog.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		printResultMetric();
+		generateResultMetric();
 	}
 
-	private static void printResultMetric() {
+	private static void generateResultMetric() {
+		BufferedWriter resultMetric = createFile("resultMetric.txt");
 		String result =
 				"********************** Métricas ********************" +
 				"\n" +
 				"Tempo total para atender todas as demandas: " + simulationTime +
 				"\n" +
-				"Tempo médio de espera na fila: " + (simulationTime/activitiesSize) +
-				"\n" +
-				"Ou [novo]: " + (totalWaitingTime/activitiesSize);
+				"Tempo médio de espera na fila: " + (totalWaitingTime/activitiesSize);
 
-		System.out.println(result);
+		try {
+			resultMetric.write(result);
+			resultMetric.newLine();
+			resultMetric.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public static void createResultFile() {
+	public static BufferedWriter createFile(String fileName) {
+		BufferedWriter writer = null;
 		try {
-			File resultFile =  new File( "resultLog.txt" ) ;
+			File resultFile =  new File(fileName) ;
 			FileOutputStream fos = new FileOutputStream(resultFile) ;
 			writer = new BufferedWriter(new OutputStreamWriter(fos)) ;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		return writer;
 	}
 
 }
