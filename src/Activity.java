@@ -3,6 +3,7 @@ public class Activity {
 	private int id;
 	private int arrivalTime;
 	private int timeItTakes;
+	private int timeWaiting;
 	
 	public Activity(int id, int arrivalTime, int timeItTakes) {
 		this.id = id;
@@ -20,6 +21,14 @@ public class Activity {
 
 	public int getTimeItTakes() {
 		return timeItTakes;
+	}
+	
+	public void addTimeWaiting() {
+		timeWaiting++;
+	}
+	
+	public int getTimeWaiting() {
+		return timeWaiting;
 	}
 	
 	@Override

@@ -6,8 +6,8 @@ public class Main {
 	public static BufferedWriter writer;
 
 	private static int simulationTime = 0;
-
 	private static int activitiesSize = 0;
+	private static int totalWaitingTime = 0;
 
 	public static void main(String[] args) {
 		Queue<Activity> activities = new ActivityReader().read();
@@ -36,6 +36,7 @@ public class Main {
 			queue.process(writer);
 			simulationTime = queue.getSimulationTime();
 		}
+		totalWaitingTime = queue.getTotalWaitingTime();
 
 		try {
 			writer.close();
@@ -52,7 +53,9 @@ public class Main {
 				"\n" +
 				"Tempo total para atender todas as demandas: " + simulationTime +
 				"\n" +
-				"Tempo médio de espera na fila: " + (simulationTime/activitiesSize);
+				"Tempo médio de espera na fila: " + (simulationTime/activitiesSize) +
+				"\n" +
+				"Ou [novo]: " + (totalWaitingTime/activitiesSize);
 
 		System.out.println(result);
 	}
