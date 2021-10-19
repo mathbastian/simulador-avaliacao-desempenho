@@ -32,8 +32,8 @@ public class Main {
 		//process the remaining activities in the queue
 		while(queue.hasEndedProcessing() == false) {
 			queue.process(executionLog);
-			simulationTime = queue.getSimulationTime();
 		}
+		simulationTime = queue.getSimulationTime();
 		totalWaitingTime = queue.getTotalWaitingTime();
 
 		try {
