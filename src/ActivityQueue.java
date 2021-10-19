@@ -40,11 +40,9 @@ public class ActivityQueue {
 	}
 	
 	public int getTotalWaitingTime() {
-		int totalWaitingTime = 0;
-		for (Activity activity : finishedActivities) {
-			totalWaitingTime += activity.getTimeWaiting();
-		}
-		return totalWaitingTime;
+		return finishedActivities.stream()
+				.map(Activity::getTimeWaiting)
+				.mapToInt(Integer::intValue).sum();
 	}
 
 	public boolean hasEndedProcessing() {
