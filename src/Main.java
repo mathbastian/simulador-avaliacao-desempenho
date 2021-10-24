@@ -11,9 +11,9 @@ public class Main {
 		Queue<Activity> activities = new ActivityReader().read();
 		activitiesSize = activities.size();
 
-		ActivityQueue queue = new ActivityQueue();
 		BufferedWriter executionLog = createFile("executionLog.txt");
-
+		ActivityQueue queue = new ActivityQueue(3, executionLog);
+		
 		int time = 0;
 
 		while (activities.size() > 0) {
@@ -26,12 +26,12 @@ public class Main {
 				time++;
 			}
 			
-			queue.process(executionLog);
+			queue.process();
 		}
 
 		//process the remaining activities in the queue
 		while(queue.hasEndedProcessing() == false) {
-			queue.process(executionLog);
+			queue.process();
 		}
 		simulationTime = queue.getSimulationTime();
 		totalWaitingTime = queue.getTotalWaitingTime();
