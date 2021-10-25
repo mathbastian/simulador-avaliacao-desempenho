@@ -14,17 +14,15 @@ public class Main {
 	public static void main(String[] args) {
 		activities = new ActivityReader().read();
 		activitiesSize = activities.size();
-		queue = new ActivityQueue();
-
 		BufferedWriter executionLog = createFile("executionLog.txt");
-
+		queue = new ActivityQueue(2, executionLog);
+		
 		int time = 0;
 
 		while (activities.size() > 0) {
 			
 			if (activities.peek().getArrivalTime() == time) {
 				queue.add(activities.poll());
-
 				checkNextItemQueue();
 				time = 0;
 			}
@@ -32,12 +30,12 @@ public class Main {
 				time++;
 			}
 			
-			queue.process(executionLog);
+			queue.process();
 		}
 
 		//process the remaining activities in the queue
 		while(queue.hasEndedProcessing() == false) {
-			queue.process(executionLog);
+			queue.process();
 		}
 		simulationTime = queue.getSimulationTime();
 		totalWaitingTime = queue.getTotalWaitingTime();
