@@ -14,10 +14,8 @@ public class Main {
 	public static void main(String[] args) {
 		activities = new ActivityReader().read();
 		activitiesSize = activities.size();
-		queue = new ActivityQueue();
-
 		BufferedWriter executionLog = createFile("executionLog.txt");
-		ActivityQueue queue = new ActivityQueue(3, executionLog);
+		queue = new ActivityQueue(2, executionLog);
 		
 		int time = 0;
 
@@ -25,7 +23,6 @@ public class Main {
 			
 			if (activities.peek().getArrivalTime() == time) {
 				queue.add(activities.poll());
-
 				checkNextItemQueue();
 				time = 0;
 			}
