@@ -3,13 +3,15 @@ import java.io.FileReader;
 import java.nio.file.FileSystems;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Random;
 
 public class ActivityReader {
 
 	public Queue<Activity> read(){
 		Queue<Activity> activities = new LinkedList<>();
+		Random rand = new Random();
 		
-		try {
+		/* try {
 			try (BufferedReader bufferedReader = 
 					new BufferedReader(new FileReader(FileSystems.getDefault().getPath("").toAbsolutePath() + "/dados.csv" ))) {
 			    String line;
@@ -27,6 +29,18 @@ public class ActivityReader {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
+		} */
+		
+		for (int i = 0; i < 200; i++) {
+			int min = 1;
+			int max = 100;
+			
+			int arrivalTime = (int) Math.floor(Math.random() * (max - min + 1) + min);
+			int timeItTakes = (int) Math.floor(Math.random() * (max - min + 1) + min);
+			
+			Activity activity = new Activity(i + 1, arrivalTime, timeItTakes);
+			
+			activities.add(activity);
 		}
 		
 		return activities;
