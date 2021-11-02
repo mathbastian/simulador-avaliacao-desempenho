@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Queue;
 
 public class ActivityProcessor {
+	private boolean actsAsQueue;
 	private Queue<Activity> activityQueue;
 	private List<Activity> finishedActivities;
 	private Activity currentActivity;
@@ -14,10 +15,11 @@ public class ActivityProcessor {
 	private int simulationTime = 0;
 	private int id;
 
-	public ActivityProcessor(int id) {
+	public ActivityProcessor(int id, boolean hasQueue) {
 		activityQueue = new LinkedList<>();
 		finishedActivities = new ArrayList<>();
 		this.id = id;
+		this.actsAsQueue = hasQueue;
 	}
 
 	public void process() {
@@ -52,6 +54,10 @@ public class ActivityProcessor {
 			return true;
 		
 		return false;
+	}
+	
+	public boolean actsAsQueue() {
+		return this.actsAsQueue;
 	}
 
 	private void consumeActivityTime() {

@@ -1,4 +1,3 @@
-import javax.sound.midi.MidiFileFormat;
 import java.io.*;
 import java.util.Optional;
 import java.util.Queue;
@@ -15,7 +14,10 @@ public class Main {
 		activities = new ActivityReader().read();
 		activitiesSize = activities.size();
 		BufferedWriter executionLog = createFile("executionLog.txt");
-		queue = new ActivityQueue(2, executionLog);
+		queue = new ActivityQueue(
+					1, //filas
+					2, //servidores
+					executionLog);
 		
 		int time = 0;
 
