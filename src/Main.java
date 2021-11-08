@@ -9,14 +9,19 @@ public class Main {
 	private static int totalWaitingTime = 0;
 	private static Queue<Activity> activities;
 	private static ActivityQueue queue;
+	private static int numberOfQueues;
+	private static int numberOfServers;
 
 	public static void main(String[] args) {
 		activities = new ActivityReader().read();
 		activitiesSize = activities.size();
 		BufferedWriter executionLog = createFile("executionLog.txt");
+		
+		numberOfQueues = 1;
+		numberOfServers = 2;
 		queue = new ActivityQueue(
-					1, //filas
-					2, //servidores
+					numberOfQueues, //filas
+					numberOfServers, //servidores
 					executionLog);
 		
 		int time = 0;
@@ -62,6 +67,8 @@ public class Main {
 		BufferedWriter resultMetric = createFile("resultMetric.txt");
 		String result =
 				"********************** Métricas ********************" +
+				"\n" +
+				"Rodando com " + numberOfQueues + " filas e " + numberOfServers + " servidores." +
 				"\n" +
 				"Tempo total para atender todas as demandas: " + simulationTime +
 				"\n" +
