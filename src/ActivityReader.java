@@ -3,13 +3,11 @@ import java.io.FileReader;
 import java.nio.file.FileSystems;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Random;
 
 public class ActivityReader {
 
 	public Queue<Activity> read(){
 		Queue<Activity> activities = new LinkedList<>();
-		Random rand = new Random();
 		
 		try {
 			try (BufferedReader bufferedReader = 
