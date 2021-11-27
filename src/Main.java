@@ -9,25 +9,23 @@ public class Main {
 	private static int totalWaitingTime = 0;
 	private static Queue<Activity> activities;
 	private static ActivityQueue queue;
-	private static int numberOfQueues;
-	private static int numberOfServers;
 
 	public static void main(String[] args) {
-		activities = new ActivityReader().read();
+		new ApplicationParameters();
+
+		activities = new ActivityReader().read(ApplicationParameters.INPUT_DATA_TYPE);
 		activitiesSize = activities.size();
-		BufferedWriter executionLog = createFile("executionLog.txt");
-		
-		numberOfQueues = 1;
-		numberOfServers = 2;
+		BufferedWriter executionLog = createFile(ApplicationParameters.LOG_FILE_NAME);
+
 		queue = new ActivityQueue(
-					numberOfQueues, //filas
-					numberOfServers, //servidores
-					executionLog);
-		
+				ApplicationParameters.NUMBER_OF_QUEUES, //filas
+				ApplicationParameters.NUMBER_OF_SERVERS, //servidores
+				executionLog);
+
 		int time = 0;
 
 		while (activities.size() > 0) {
-			
+
 			if (activities.peek().getArrivalTime() == time) {
 				queue.add(activities.poll());
 				checkNextItemQueue();
@@ -36,7 +34,7 @@ public class Main {
 			else {
 				time++;
 			}
-			
+
 			queue.process();
 		}
 
@@ -64,11 +62,11 @@ public class Main {
 	}
 
 	private static void generateResultMetric() {
-		BufferedWriter resultMetric = createFile("resultMetric.txt");
+		BufferedWriter resultMetric = createFile(ApplicationParameters.RESULT_FILE_NAME);
 		String result =
 				"********************** Métricas ********************" +
 				"\n" +
-				"Rodando com " + numberOfQueues + " filas e " + numberOfServers + " servidores." +
+				"Rodando com " + ApplicationParameters.NUMBER_OF_QUEUES + " filas e " + ApplicationParameters.NUMBER_OF_SERVERS + " servidores." +
 				"\n" +
 				"Tempo total para atender todas as demandas: " + simulationTime +
 				"\n" +
